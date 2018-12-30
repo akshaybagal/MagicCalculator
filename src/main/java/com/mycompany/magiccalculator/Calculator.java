@@ -5,6 +5,9 @@
  */
 package com.mycompany.magiccalculator;
 
+import com.sun.media.jfxmedia.logging.Logger;
+import java.io.IOException;
+
 /**
  *
  * @author Akshay
@@ -14,6 +17,10 @@ public class Calculator {
     private int ans = 0;
     private int offset = 0;
     
+    public String getExpr(){
+        return this.expr;
+    }
+    
     public int getAns(){
         return this.ans;
     }
@@ -22,6 +29,14 @@ public class Calculator {
     }
     public void setExpr(String expr){
         this.expr = expr;
+    }
+    
+    public void setAns(int ans){
+        this.ans = ans;
+    }
+    
+    public void setOffset(int offset){
+        this.offset = offset;
     }
     
     public int isValid(String expr){
@@ -131,21 +146,53 @@ public class Calculator {
     return head;
     }
     
-    
-    public int calc(){
-        File fl = new File();
-        fl.setReqCount();
+    private int calcOffset(int count){
+        int rank = 0;
+        if((count & (count-1)) == 0)
+                rank += 8;
         
-        ans = isValid(expr);
-        if(ans == 1){
-            Node head = prepareLinkedList(expr);
-            solveMultiplyDivision(head);
-            solveAdditionSubtraction(head);
-            if(head != null && ans != -1)
-                ans = head.num+fl.getReqCount();
+        if((count & 1) > 0)
+                rank -= 8;
+        
+        if((count&1) == 0)
+                rank += 4;
+        
+        if((count%3) == 0)
+                rank += 3;
+        
+        if((count%5) == 0)
+                rank -= 5;
+        
+        return rank;
+    }
+    
+    public void calc(){
+        try{
+            File fl = new File();
+            fl.setReqCount();
+            int count = 1;
+            this.ans = isValid(this.expr);
+            if(this.ans == 1){
+                Node head = prepareLinkedList(expr);
+                solveMultiplyDivision(head);
+                solveAdditionSubtraction(head);
+                if(head != null && ans != -1)
+                    this.ans = head.num;
+                    count = fl.getReqCount();
+                    this.offset = calcOffset(count);
+                    fl.incrReqCount();
+                    this.ans += this.offset;
+            }
+            
+            
+            }catch(NullPointerException npe){
+                    Logger.logMsg(1, npe.getMessage());
+            }catch(IOException ioe){
+                    Logger.logMsg(1, ioe.getMessage());
+            }catch(NumberFormatException nfe){
+                    Logger.logMsg(1,nfe.getMessage());
+            }catch(Exception e){
+                    Logger.logMsg(1, e.getMessage());
         }
-        offset = fl.getReqCount();
-        fl.incrReqCount();
-        return ans;
     }
 }
