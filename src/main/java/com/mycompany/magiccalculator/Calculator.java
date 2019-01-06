@@ -13,9 +13,22 @@ import java.io.IOException;
  * @author Akshay
  */
 public class Calculator {
+    
+    private int metaCode = 0;
+    private String metaStatus = "";
+    
     private String expr = "";
     private int ans = 0;
     private int offset = 0;
+    private int actualResult = 0;
+    
+    public int getMetaCode(){
+        return this.metaCode;
+    }
+    
+    public String getMetaStatus(){
+            return this.metaStatus;
+    }
     
     public String getExpr(){
         return this.expr;
@@ -26,6 +39,9 @@ public class Calculator {
     }
     public int getOffset(){
         return this.offset;
+    }
+    public int getActualResult(){
+        return this.actualResult;
     }
     public void setExpr(String expr){
         this.expr = expr;
@@ -168,7 +184,7 @@ public class Calculator {
     
     public void calc(){
         try{
-            File fl = new File();
+            File fl = File.getInstance();
             fl.setReqCount();
             int count = 1;
             this.ans = isValid(this.expr);
@@ -176,22 +192,42 @@ public class Calculator {
                 Node head = prepareLinkedList(expr);
                 solveMultiplyDivision(head);
                 solveAdditionSubtraction(head);
-                if(head != null && ans != -1)
+                if(head != null && ans != -1){
                     this.ans = head.num;
+                    this.actualResult = this.ans;
                     count = fl.getReqCount();
                     this.offset = calcOffset(count);
                     fl.incrReqCount();
                     this.ans += this.offset;
+                    this.metaCode = 200;
+                    this.metaStatus = "OK";
+                }
+                else
+                {
+                    this.metaCode = 500;
+                    this.metaStatus = "Error";
+                }
             }
-            
-            
+            else
+            {
+                this.metaCode = 400;
+                this.metaStatus = "Invalid Expression";
+            }
             }catch(NullPointerException npe){
+                    this.metaCode = 500;
+                    this.metaStatus = "Error";
                     Logger.logMsg(1, npe.getMessage());
             }catch(IOException ioe){
+                    this.metaCode = 500;
+                    this.metaStatus = "Error";
                     Logger.logMsg(1, ioe.getMessage());
             }catch(NumberFormatException nfe){
+                    this.metaCode = 500;
+                    this.metaStatus = "Error";
                     Logger.logMsg(1,nfe.getMessage());
             }catch(Exception e){
+                    this.metaCode = 500;
+                    this.metaStatus = "Error";
                     Logger.logMsg(1, e.getMessage());
         }
     }

@@ -5,6 +5,7 @@
  */
 package com.mycompany.magiccalculator;
 
+import java.util.HashMap;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -14,19 +15,14 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement
 public class Response {
+    @XmlElement
+    private MetaResponse meta;
     
     @XmlElement
-    private int result = 0;
+    private DataResponse data;
     
-    @XmlElement
-    private String inExpression = "";
-    
-    @XmlElement
-    private int offset = 0;
-    
-    public void setResult(int result, String expr,int offset){
-        this.result = result;
-        this.inExpression = expr;
-        this.offset = offset;
+    public void setResult(int metaCode, String metaStatus,int result, String expr,int offset,int actualResult){
+        meta = new MetaResponse(metaCode, metaStatus);
+        data = new DataResponse(result,expr,offset,actualResult);
     }
 }

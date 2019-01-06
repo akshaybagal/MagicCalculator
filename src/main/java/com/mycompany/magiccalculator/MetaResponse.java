@@ -6,17 +6,23 @@
 package com.mycompany.magiccalculator;
 
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
  * @author Akshay
  */
-@XmlRootElement
-public class Meta {
+public class MetaResponse {
+    
     @XmlElement
     private int code = 0;
-    public Meta(int code){
+    
+    @XmlElement
+    private String status = "";
+    
+    public MetaResponse(){}
+    
+    public MetaResponse(int code, String status){
         this.code = code;
+        this.status = status;
     }
 }

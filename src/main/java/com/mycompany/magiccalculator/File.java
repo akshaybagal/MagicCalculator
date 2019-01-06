@@ -15,16 +15,24 @@ import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.logging.Level;
+import javax.ejb.Singleton;
 /**
  * 
  *
  * @author Akshay
  */
+@Singleton
 public class File {
     private int reqCount = 0;
+    private static File instance = null; 
     
     public int getReqCount(){
         return this.reqCount;
+    }
+    public synchronized static File getInstance(){
+        if(instance == null)
+           instance = new File();
+        return instance;
     }
     
     public synchronized void setReqCount() throws IOException{
@@ -40,43 +48,39 @@ public class File {
             d.close();
             f.close();
         }catch(FileNotFoundException fne){
-                Logger.logMsg(1, fne.getMessage());
+                Logger.logMsg(1000, fne.getMessage());
         }catch(Exception e){
-            Logger.logMsg(1, e.getMessage());
+            Logger.logMsg(1000, e.getMessage());
         }
         finally{
-            if(f != null){
+            if(f != null)
                 f.close();
-            }
-            if(d!=null){
+            if(d!=null)
                 d.close();
-            }
         }
     }
     
     public synchronized void incrReqCount() throws IOException {
-            FileOutputStream f = null;
-            DataOutputStream d = null;
-            try{
+        FileOutputStream f = null;
+        DataOutputStream d = null;
+        try{
             StringBuilder path = new StringBuilder();
             path = path.append(Paths.get(".").toAbsolutePath().normalize().toString());
             path = path.append("/count.txt");
             f = new FileOutputStream(path.toString());
             d = new DataOutputStream(f);
             d.writeInt(this.reqCount+1);
-            }catch(FileNotFoundException fne){
-                    Logger.logMsg(1,fne.getMessage());
-            }catch(Exception e){
-                Logger.logMsg(1, e.getMessage());
-            }
-            finally{
-                
-                if(f != null)
-                    f.close();
-                if(d != null)
-                    d.close();
-            
-            }
+        }catch(FileNotFoundException fne){
+                    Logger.logMsg(1000,fne.getMessage());
+        }catch(Exception e){
+                Logger.logMsg(1000, e.getMessage());
+        }
+        finally{
+            if(f != null)
+                f.close();
+            if(d != null)
+                d.close();            
+        }
     }
     
     public String getPath(){
