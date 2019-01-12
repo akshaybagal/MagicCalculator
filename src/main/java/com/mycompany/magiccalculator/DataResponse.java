@@ -13,20 +13,20 @@ import javax.xml.bind.annotation.XmlElement;
  */
 public class DataResponse {
     @XmlElement
-    private int result = 0;
+    private long result = 0;
     
     @XmlElement
     private String inExpression = "";
     
     @XmlElement
-    private int offset = 0;
+    private long offset = 0;
     
     @XmlElement
-    private int actualResult = 0;
+    private long actualResult = 0;
     
     public DataResponse(){}
     
-    public DataResponse(int result, String expr,int offset,int actualResult){
+    public DataResponse(long result, String expr,long offset,long actualResult){
         this.result = result;
         this.inExpression = expr;
         this.offset = offset;

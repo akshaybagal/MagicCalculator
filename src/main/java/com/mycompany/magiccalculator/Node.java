@@ -10,11 +10,11 @@ package com.mycompany.magiccalculator;
  * @author Akshay
  */
 public class Node {
-    public int num = 0;
+    public long num = 0;
     public char opr = 'a';
     public Node next = null;
     
-    public Node(int num, char opr){
+    public Node(long num, char opr){
         this.num = num;
         this.opr = opr;
     }

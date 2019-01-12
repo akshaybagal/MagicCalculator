@@ -18,9 +18,9 @@ public class Calculator {
     private String metaStatus = "";
     
     private String expr = "";
-    private int ans = 0;
-    private int offset = 0;
-    private int actualResult = 0;
+    private long ans = 0;
+    private long offset = 0;
+    private long actualResult = 0;
     
     public int getMetaCode(){
         return this.metaCode;
@@ -34,13 +34,13 @@ public class Calculator {
         return this.expr;
     }
     
-    public int getAns(){
+    public long getAns(){
         return this.ans;
     }
-    public int getOffset(){
+    public long getOffset(){
         return this.offset;
     }
-    public int getActualResult(){
+    public long getActualResult(){
         return this.actualResult;
     }
     public void setExpr(String expr){
@@ -137,7 +137,7 @@ public class Calculator {
                 s.append("0");
                 s.append(expr.substring(start, i));
                 start = i+1;
-                int num = Integer.parseInt(s.toString());
+                long num = Long.parseLong(s.toString());
                 if(head == null){
                     ptr = new Node(num,'a');
                     head = ptr;
@@ -154,11 +154,11 @@ public class Calculator {
         sl.append("0");
         sl.append(expr.substring(start, expr.length()));
         if(head == null){
-            ptr = new Node(Integer.parseInt(sl.toString()),'a');
+            ptr = new Node(Long.parseLong(sl.toString()),'a');
             head = ptr;
         }
         else
-            ptr.next = new Node(Integer.parseInt(sl.toString()),'a');
+            ptr.next = new Node(Long.parseLong(sl.toString()),'a');
     return head;
     }
     
