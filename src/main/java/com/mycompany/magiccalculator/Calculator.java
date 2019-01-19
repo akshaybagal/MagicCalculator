@@ -21,6 +21,7 @@ public class Calculator {
     private long ans = 0;
     private long offset = 0;
     private long actualResult = 0;
+    private long apiHit = 0;
     
     public int getMetaCode(){
         return this.metaCode;
@@ -43,6 +44,11 @@ public class Calculator {
     public long getActualResult(){
         return this.actualResult;
     }
+    
+    public long getApiHit(){
+        return this.apiHit;
+    }
+    
     public void setExpr(String expr){
         this.expr = expr;
     }
@@ -55,6 +61,9 @@ public class Calculator {
         this.offset = offset;
     }
     
+    public void setApiHit(long apiHit){
+        this.apiHit = apiHit;
+    }
     public int isValid(String expr){
         int prev = 0;
         for(int i = 0 ; i < expr.length();i++){
@@ -162,7 +171,7 @@ public class Calculator {
     return head;
     }
     
-    private int calcOffset(int count){
+    private int calcOffset(long count){
         int rank = 0;
         if((count & (count-1)) == 0)
                 rank += 8;
@@ -186,7 +195,7 @@ public class Calculator {
         try{
             File fl = File.getInstance();
             fl.setReqCount();
-            int count = 1;
+            long count = 1;
             this.ans = isValid(this.expr);
             if(this.ans == 1){
                 Node head = prepareLinkedList(expr);
@@ -196,6 +205,7 @@ public class Calculator {
                     this.ans = head.num;
                     this.actualResult = this.ans;
                     count = fl.getReqCount();
+                    setApiHit(count);
                     this.offset = calcOffset(count);
                     fl.incrReqCount();
                     this.ans += this.offset;

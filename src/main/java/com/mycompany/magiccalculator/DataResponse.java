@@ -24,12 +24,16 @@ public class DataResponse {
     @XmlElement
     private long actualResult = 0;
     
+    @XmlElement
+    private long apiHit = 0;
+    
     public DataResponse(){}
     
-    public DataResponse(long result, String expr,long offset,long actualResult){
+    public DataResponse(long result, String expr,long offset,long actualResult,long apiHit){
         this.result = result;
         this.inExpression = expr;
         this.offset = offset;
         this.actualResult = actualResult;
+        this.apiHit = apiHit;
     }
 }

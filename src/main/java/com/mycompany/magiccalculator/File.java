@@ -29,7 +29,7 @@ public class File {
     public int getReqCount(){
         return this.reqCount;
     }
-    public synchronized static File getInstance(){
+    public static File getInstance(){
         if(instance == null)
            instance = new File();
         return instance;
@@ -45,8 +45,6 @@ public class File {
             f = new FileInputStream(path.toString());
             d = new DataInputStream(f);
             this.reqCount = d.readInt();
-            d.close();
-            f.close();
         }catch(FileNotFoundException fne){
                 Logger.logMsg(1000, fne.getMessage());
         }catch(Exception e){

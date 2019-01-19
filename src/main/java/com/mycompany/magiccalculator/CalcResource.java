@@ -49,7 +49,7 @@ public class CalcResource {
         c.setExpr(expr);
         c.calc();
         
-        r.setResult(c.getMetaCode(),c.getMetaStatus(),c.getAns(),expr,c.getOffset(),c.getActualResult());
+        r.setResult(c.getMetaCode(),c.getMetaStatus(),c.getAns(),expr,c.getOffset(),c.getActualResult(),c.getApiHit());
         return r;
     }
 

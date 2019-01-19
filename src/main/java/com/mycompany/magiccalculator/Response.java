@@ -21,8 +21,8 @@ public class Response {
     @XmlElement
     private DataResponse data;
     
-    public void setResult(int metaCode, String metaStatus,long result, String expr,long offset,long actualResult){
+    public void setResult(int metaCode, String metaStatus,long result, String expr,long offset,long actualResult,long apiHit){
         meta = new MetaResponse(metaCode, metaStatus);
-        data = new DataResponse(result,expr,offset,actualResult);
+        data = new DataResponse(result,expr,offset,actualResult,apiHit);
     }
 }

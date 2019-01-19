@@ -30,6 +30,8 @@ public class ApplicationConfig extends Application {
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
         resources.add(com.mycompany.magiccalculator.CalcResource.class);
+        resources.add(com.mycompany.magiccalculator.ItemResource.class);
+        resources.add(com.mycompany.magiccalculator.ItemsResource.class);
     }
     
 }
